@@ -36,7 +36,7 @@ extension FieldCache {
 
 extension Container {
 
-    /// Creates or retreives a field cache object.
+    /// Creates or retrieves a field cache object.
     ///
     /// - Returns: The `FieldCache`
     /// - Throws: When no `FieldCache` has been registered with this container.
