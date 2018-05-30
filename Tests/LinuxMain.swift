@@ -7,7 +7,7 @@ import XCTest
 
 extension SubmissionsTests {
     static var allTests = [
-        ("testAPI", testAPI),
+        ("testCreateValid", testCreateValid),
     ]
 }
 
