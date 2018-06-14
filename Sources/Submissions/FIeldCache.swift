@@ -50,6 +50,10 @@ extension Request {
         try populateFields(with: T.Submission(nil).makeFields().mapValues(AnyField.init))
     }
 
+    public func populateFields<T: Submission>(_ submittable: T.Type) throws {
+        try populateFields(with: T.init().makeFields().mapValues(AnyField.init))
+    }
+
     /// Sets any fields and errors on the field cache of this `Container`.
     ///
     /// - Parameters:

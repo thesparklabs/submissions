@@ -2,7 +2,7 @@ import Validation
 import Vapor
 
 /// Represents a property that can be rendered in an html form and validated on submission.
-public struct Field<S: Submittable> {
+public struct Field<S: Submission> {
     /// A label describing this field. Used by Tags to render alongside an input field.
     public let label: String?
 
