@@ -1,7 +1,7 @@
 import Vapor
 
 /// A field with a key
-public struct FieldEntry<S: Submittable> {
+public struct FieldEntry<S: Submission> {
     var key: String
     var field: Field<S>
 
