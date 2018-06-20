@@ -2,13 +2,14 @@ import TemplateKit
 
 final class InputTag: TagRenderer {
     enum InputType: String {
-        case email
-        case password
-        case text
+        case email = "email"
+        case password = "password"
+        case text = "text"
     }
 
     struct InputData: Encodable {
         let key: String
+        let type: String
         let value: String?
         let label: String?
         let isRequired: Bool
@@ -28,9 +29,14 @@ final class InputTag: TagRenderer {
         let placeholder = tag.parameters[safe: 2]?.string
         let helpText = tag.parameters[safe: 3]?.string
 
+        //Don't pass back a value for password
+        let value:String? = type != .password ? data.value : nil
+
+
         let viewData = InputData(
             key: data.key,
-            value: data.value,
+            type: type.rawValue,
+            value: value,
             label: data.label,
             isRequired: data.isRequired,
             errors: data.errors,
@@ -40,17 +46,7 @@ final class InputTag: TagRenderer {
         )
 
         return renderer
-            .render(config.tagTemplatePaths.path(for: type), viewData)
+            .render(config.tagTemplatePaths.inputField, viewData)
             .map { .data($0.data) }
-    }
-}
-
-private extension TagTemplatePaths {
-    func path(for inputType: InputTag.InputType) -> String {
-        switch inputType {
-        case .text: return textField
-        case .email: return emailField
-        case .password: return passwordField
-        }
     }
 }
