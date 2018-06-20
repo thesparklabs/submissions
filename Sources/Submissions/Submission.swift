@@ -29,7 +29,7 @@ extension Submission {
         asyncValidators: [Field<Self>.Validate<T>] = [],
         isRequired: Bool = true,
         absentValueStrategy: AbsentValueStrategy = .equal(""),
-        errorOnAbsense: ValidationError = BasicValidationError.onEmpty
+        errorOnAbsense: ValidationError = ValidationError.onEmpty
     ) throws -> FieldEntry<Self> {
         return try .init(
             keyPath: keyPath,
@@ -64,7 +64,7 @@ extension Submission {
         asyncValidators: [Field<Self>.Validate<T>] = [],
         isRequired: Bool = true,
         absentValueStrategy: AbsentValueStrategy = .equal(""),
-        errorOnAbsense: ValidationError = BasicValidationError.onEmpty
+        errorOnAbsense: ValidationError = ValidationError.onEmpty
     ) throws -> FieldEntry<Self> {
         return try .init(
             keyPath: keyPath,
@@ -135,10 +135,10 @@ extension Submission {
     }
 }
 
-extension BasicValidationError {
+extension ValidationError {
      /// The default error to throw when a value is empty when that is not valid.
-     public static var onEmpty: BasicValidationError {
-        return .init("Value may not be empty")
+     public static var onEmpty: ValidationError {
+        return .init("This field is required")
     }
 }
 

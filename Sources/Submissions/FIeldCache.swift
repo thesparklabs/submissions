@@ -64,12 +64,13 @@ extension Request {
         with fields: [String: AnyField],
         andErrors errors: [String: [ValidationError]] = [:]
     ) throws {
+        print("Populate with \(errors)")
         let fieldCache = try self.fieldCache()
         fields.forEach {
             fieldCache[valueFor: $0.key] = $0.value
         }
         errors.forEach {
-            fieldCache[errorsFor: $0.key] = $0.value.map { $0.reason }
+            fieldCache[errorsFor: $0.key] = $0.value.flatMap { $0.messages.map { $0 } }
         }
     }
 }
