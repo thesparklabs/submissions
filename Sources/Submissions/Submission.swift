@@ -1,4 +1,5 @@
 import Vapor
+import AnyCodable
 
 /// A payload containing fields to use when creating or updating an entity.
 public protocol Submission: Decodable, Reflectable {
@@ -29,7 +30,8 @@ extension Submission {
         asyncValidators: [Field<Self>.Validate<T>] = [],
         isRequired: Bool = true,
         absentValueStrategy: AbsentValueStrategy = .equal(""),
-        errorOnAbsense: ValidationError = ValidationError.onEmpty
+        errorOnAbsense: ValidationError = ValidationError.onEmpty,
+        selectValues: [[String:AnyEncodable]] = []
     ) throws -> FieldEntry<Self> {
         return try .init(
             keyPath: keyPath,
@@ -40,7 +42,8 @@ extension Submission {
                 asyncValidators: asyncValidators,
                 isRequired: isRequired,
                 absentValueStrategy: absentValueStrategy,
-                errorOnAbsense: errorOnAbsense
+                errorOnAbsense: errorOnAbsense,
+                selectValues: selectValues
             )
         )
     }
@@ -64,7 +67,8 @@ extension Submission {
         asyncValidators: [Field<Self>.Validate<T>] = [],
         isRequired: Bool = true,
         absentValueStrategy: AbsentValueStrategy = .equal(""),
-        errorOnAbsense: ValidationError = ValidationError.onEmpty
+        errorOnAbsense: ValidationError = ValidationError.onEmpty,
+        selectValues: [[String:AnyEncodable]] = []
     ) throws -> FieldEntry<Self> {
         return try .init(
             keyPath: keyPath,
@@ -75,7 +79,8 @@ extension Submission {
                 asyncValidators: asyncValidators,
                 isRequired: isRequired,
                 absentValueStrategy: absentValueStrategy,
-                errorOnAbsense: errorOnAbsense
+                errorOnAbsense: errorOnAbsense,
+                selectValues: selectValues
             )
         )
     }
@@ -136,9 +141,12 @@ extension Submission {
 }
 
 extension ValidationError {
-     /// The default error to throw when a value is empty when that is not valid.
-     public static var onEmpty: ValidationError {
+    /// The default error to throw when a value is empty when that is not valid.
+    public static var onEmpty: ValidationError {
         return .init("This field is required")
+    }
+    public static var notAnOption: ValidationError {
+        return .init("Please select a valid option")
     }
 }
 

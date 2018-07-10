@@ -1,4 +1,5 @@
 import TemplateKit
+import AnyCodable
 
 final class InputTag: TagRenderer {
     enum InputType: String {
@@ -7,7 +8,7 @@ final class InputTag: TagRenderer {
         case text = "text"
     }
 
-    struct InputData: Encodable {
+    /*struct InputData: Encodable {
         let key: String
         let type: String
         let value: String?
@@ -17,7 +18,7 @@ final class InputTag: TagRenderer {
         let hasErrors: Bool
         let placeholder: String?
         let helpText: String?
-    }
+    }*/
 
     func render(tag: TagContext) throws -> Future<TemplateData> {
         let data = try tag.submissionsData()
@@ -32,7 +33,6 @@ final class InputTag: TagRenderer {
         //Don't pass back a value for password
         let value:String? = type != .password ? data.value : nil
 
-
         let viewData = InputData(
             key: data.key,
             type: type.rawValue,
@@ -42,7 +42,8 @@ final class InputTag: TagRenderer {
             errors: data.errors,
             hasErrors: data.hasErrors,
             placeholder: placeholder,
-            helpText: helpText
+            helpText: helpText,
+            selectValues: data.selectValues
         )
 
         return renderer

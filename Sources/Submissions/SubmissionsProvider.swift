@@ -25,6 +25,6 @@ public final class SubmissionsProvider: Provider {
 extension SubmissionsProvider {
     /// The Submission related tags.
     public static var tags: [String: TagRenderer] {
-        return ["submissions:input": InputTag()]
+        return ["submissions:input": InputTag(), "submissions:select": SelectTag()]
     }
 }

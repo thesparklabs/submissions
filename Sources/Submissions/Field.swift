@@ -1,8 +1,12 @@
 import Validation
 import Vapor
+import AnyCodable
 
 /// Represents a property that can be rendered in an html form and validated on submission.
 public struct Field<S: Submission> {
+
+    public typealias SelectValuesList = [[String:AnyEncodable]]
+
     /// A label describing this field. Used by Tags to render alongside an input field.
     public let label: String?
 
@@ -11,6 +15,12 @@ public struct Field<S: Submission> {
 
     /// Whether or not values are allowed to be nil
     public let isRequired: Bool
+
+    // Used to store a list of values
+    // Mainly for a select, e.g. you might have [["key": "US", "name": "United States"]]
+    // for a country select list
+    //public let selectValues: [String]
+    public let selectValues: SelectValuesList
 
     private let _validate: (ValidationContext, S?, Request) throws -> Future<[ValidationError]>
 
@@ -24,11 +34,13 @@ public struct Field<S: Submission> {
         asyncValidators: [Validate<T>],
         isRequired: Bool = true,
         absentValueStrategy: AbsentValueStrategy = .equal(""),
-        errorOnAbsense: ValidationError
+        errorOnAbsense: ValidationError,
+        selectValues: SelectValuesList = []
     ) {
         self.label = label
         self.value = value?.description
         self.isRequired = isRequired
+        self.selectValues = selectValues
         _validate = { context, submittable, req in
             let validationErrors: [ValidationError]
 
@@ -37,6 +49,13 @@ public struct Field<S: Submission> {
                 validationErrors = [errorOnAbsense]
             case (.some(let value), _, _):
                 var errors: [ValidationError] = []
+
+                //If we have selectValues, validate the value is in that list
+                /*if selectValues.count > 0 {
+                    if selectValues.contains(value.description) {
+                        errors.append(ValidationError.notAnOption)
+                    }
+                }*/
 
                 for validator in validators {
                     do {
