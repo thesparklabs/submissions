@@ -21,7 +21,8 @@ final class SelectTag: TagRenderer {
             hasErrors: data.hasErrors,
             placeholder: placeholder,
             helpText: helpText,
-            selectValues: data.selectValues
+            selectValues: data.selectValues,
+            attributeExtra: nil
         )
 
         return renderer

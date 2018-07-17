@@ -29,6 +29,7 @@ final class InputTag: TagRenderer {
         let type = tag.parameters[safe: 1]?.string.flatMap(InputType.init(rawValue:)) ?? .text
         let placeholder = tag.parameters[safe: 2]?.string
         let helpText = tag.parameters[safe: 3]?.string
+        let attributeExtra = tag.parameters[safe: 4]?.string
 
         //Don't pass back a value for password
         let value:String? = type != .password ? data.value : nil
@@ -43,7 +44,8 @@ final class InputTag: TagRenderer {
             hasErrors: data.hasErrors,
             placeholder: placeholder,
             helpText: helpText,
-            selectValues: data.selectValues
+            selectValues: data.selectValues,
+            attributeExtra: attributeExtra
         )
 
         return renderer

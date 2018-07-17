@@ -50,6 +50,7 @@ internal struct InputData: Encodable {
     let placeholder: String?
     let helpText: String?
     let selectValues: [[String:AnyEncodable]]
+    let attributeExtra: String?
 }
 
 // I don't think this will be required
