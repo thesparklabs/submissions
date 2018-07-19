@@ -8,18 +8,6 @@ final class InputTag: TagRenderer {
         case text = "text"
     }
 
-    /*struct InputData: Encodable {
-        let key: String
-        let type: String
-        let value: String?
-        let label: String?
-        let isRequired: Bool
-        let errors: [String]
-        let hasErrors: Bool
-        let placeholder: String?
-        let helpText: String?
-    }*/
-
     func render(tag: TagContext) throws -> Future<TemplateData> {
         let data = try tag.submissionsData()
 

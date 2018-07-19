@@ -10,6 +10,25 @@ final class SelectTag: TagRenderer {
 
         let placeholder = tag.parameters[safe: 1]?.string
         let helpText = tag.parameters[safe: 2]?.string
+        let selectValues = tag.parameters[safe: 3]?.array //Overrides data if present
+
+        var ss:[[String:AnyEncodable]] = []
+        // hack [TemplateData] (which, ironically, isn't encodable) into our anyencodable array
+        if let vals = selectValues {
+            for v in vals {
+                if let dd = v.dictionary {
+                    var dict:[String:AnyEncodable] = [:]
+                    for (key,val) in dd {
+                        if let str = val.string {
+                            dict[key] = AnyEncodable(str)
+                        }
+                    }
+                    ss.append(dict)
+                }
+            }
+        } else {
+            ss = data.selectValues
+        }
 
         let viewData = InputData(
             key: data.key,
@@ -21,7 +40,7 @@ final class SelectTag: TagRenderer {
             hasErrors: data.hasErrors,
             placeholder: placeholder,
             helpText: helpText,
-            selectValues: data.selectValues,
+            selectValues: ss,
             attributeExtra: nil
         )
 
