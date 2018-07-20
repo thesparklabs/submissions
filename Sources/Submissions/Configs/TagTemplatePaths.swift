@@ -4,6 +4,7 @@ public struct TagTemplatePaths {
     public let inputField: String
     public let selectField: String
     public let textField: String
+    public let checkboxField: String
 
     /// Create a new TagTemplatePaths configuration value.
     ///
@@ -12,10 +13,12 @@ public struct TagTemplatePaths {
     public init(
         inputField: String = "Submissions/Fields/input-field",
         selectField: String = "Submissions/Fields/select-field",
-        textField: String = "Submissions/Fields/text-field"
+        textField: String = "Submissions/Fields/text-field",
+        checkboxField: String = "Submissions/Fields/checkbox-field"
     ) {
         self.inputField = inputField
         self.selectField = selectField
         self.textField = textField
+        self.checkboxField = checkboxField
     }
 }
