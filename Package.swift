@@ -11,7 +11,7 @@ let package = Package(
         .package(url: "https://github.com/nodes-vapor/sugar.git", from: "3.0.0-alpha"),
         .package(url: "https://github.com/vapor/template-kit.git", from: "1.0.0"),
         .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0"),
-        .package(url: "https://github.com/Flight-School/AnyCodable.git", from: "0.1.0")
+        .package(url: "https://github.com/thesparklabs/AnyCodable.git", from: "0.1.0")
     ],
     targets: [
         .target(name: "Submissions", dependencies: ["Sugar", "TemplateKit", "Vapor", "AnyCodable"]),
