@@ -53,8 +53,14 @@ extension Future where T: Submittable {
     /// - Parameter req: The current `Request`.
     /// - Returns: The unchanged submittable value.
     public func populateFields(on req: Request) -> Future<T> {
-        return self.try { submittable in
+        return map(to: T.self) { submittable in
             try req.populateFields(with: T.Submission(submittable).makeFields().mapValues(AnyField.init))
+            return submittable
         }
+    }
+}
+extension Array {
+    public subscript(safe index: Int) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }
