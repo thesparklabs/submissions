@@ -20,7 +20,7 @@ extension SubmissionValidationError: ResponseEncodable {
     public func encode(for req: Request) throws -> Future<Response> {
         let errorResponse = try ErrorResponse(validationErrors: req.fieldCache().errors)
 
-        let response = try req.makeResponse(
+        let response = try req.response(
             http: .init(
                 status: .unprocessableEntity,
                 body: HTTPBody(data: JSONEncoder().encode(errorResponse))

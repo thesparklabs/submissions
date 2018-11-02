@@ -14,6 +14,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "Submissions", dependencies: [
+            "Validation",
             "TemplateKit", 
             "Vapor", 
             "AnyCodable"
