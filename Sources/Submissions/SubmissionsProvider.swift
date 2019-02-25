@@ -1,3 +1,4 @@
+import Leaf
 import Service
 import Vapor
 
@@ -22,9 +23,14 @@ public final class SubmissionsProvider: Provider {
     }
 }
 
-extension SubmissionsProvider {
-    /// The Submission related tags.
-    public static var tags: [String: TagRenderer] {
-        return ["submissions:input": InputTag(), "submissions:select": SelectTag(), "submissions:text": TextTag(), "submissions:checkbox": CheckboxTag()]
+public extension LeafTagConfig {
+    public mutating func useSubmissionsLeafTags(on container: Container) throws {
+        let config: SubmissionsConfig = try container.make()
+        let paths = config.tagTemplatePaths
+
+        use(InputTag(), as: "submissions:input")
+        use(SelectTag(), as: "submissions:select")
+        use(TextTag(), as: "submissions:text")
+        use(CheckboxTag(), as: "submissions:checkbox")
     }
 }
